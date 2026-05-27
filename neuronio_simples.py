@@ -12,3 +12,4 @@ lim_atv = -1
 
 soma_produtos = (valor1 * peso1) + (valor2 * peso2) + (valor3 * peso3)
 
+pot_de_atv = round((soma_produtos - lim_atv),3)
