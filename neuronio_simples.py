@@ -18,3 +18,11 @@ if pot_de_atv >= 0:
     y = 1
 else:
     y = -1
+
+print("\n--- Processamento do Perceptron ---")
+print(f"Valores: [{valor1}, {valor2}, {valor3}]")
+print(f"Pesos:   [{peso1}, {peso2}, {peso3}]")
+print("-" * 40)
+print(f"Soma Linear (Σ):            {round(soma_produtos, 3)}")
+print(f"Potencial de Ativação (u):  {pot_de_atv}")
+print(f"Sinal de Saída Final (y):   {y}")
