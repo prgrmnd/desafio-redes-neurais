@@ -10,4 +10,5 @@ peso3 = round(random.uniform(0, 1), 3)
 
 lim_atv = -1
 
+soma_produtos = (valor1 * peso1) + (valor2 * peso2) + (valor3 * peso3)
 
