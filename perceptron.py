@@ -41,3 +41,5 @@ dados_treino = [
     {"x1": 0.2012,  "x2": 0.2611, "x3": 5.4631, "d": 1.0000}
 ]
 
+entradas = dados_treino[0]
+
