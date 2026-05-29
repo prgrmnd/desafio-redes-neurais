@@ -50,3 +50,11 @@ if soma_produtos >= 0:
 else:
     sinal_saida = -1
 
+print("\nProcessamento do Perceptron")
+print(f"Valores: [{entradas['x1']}, {entradas['x2']}, {entradas['x3']}]")
+print(f"Pesos:   [{pesos['peso1']}, {pesos['peso2']}, {pesos['peso3']}, {pesos['peso_limiar']}]")
+print(f"Peso do Limiar (Bias): {pesos['peso_limiar']}")
+print("-" * 40)
+print(f"Potencial de Ativação:  {round(soma_produtos, 3)}")
+print(f"Sinal de Saída Final:   {sinal_saida}")
+print(f"Saída Desejada (d):     {entradas['d']}")
