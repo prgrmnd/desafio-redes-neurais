@@ -60,17 +60,32 @@ for epoca in range(1, max_epocas + 1):
             sinal_saida = -1
 
         if sinal_saida != entradas['d']:
+            erros_epoca += 1
+            
             erro = entradas['d'] - sinal_saida
             pesos['peso1'] = round(pesos['peso1'] + (taxa_aprendizado * erro * entradas['x1']), 4)
             pesos['peso2'] = round(pesos['peso2'] + (taxa_aprendizado * erro * entradas['x2']), 4)
             pesos['peso3'] = round(pesos['peso3'] + (taxa_aprendizado * erro * entradas['x3']), 4)
             pesos['peso_limiar'] = round(pesos['peso_limiar'] + (taxa_aprendizado * erro * -1), 4)
-            erros_epoca += 1
+
+            
         print("\nProcessamento do Perceptron")
         print(f"Valores: [{entradas['x1']}, {entradas['x2']}, {entradas['x3']}]")
         print(f"Pesos:   [{pesos['peso1']}, {pesos['peso2']}, {pesos['peso3']}, {pesos['peso_limiar']}]")
         print(f"Peso do Limiar (Bias): {pesos['peso_limiar']}")
         print("-" * 40)
         print(f"Potencial de Ativação:  {round(soma_produtos, 3)}")
-        print(f"Sinal de Saída Esperado:   {entradas['d']}")
         print(f"Sinal de Saída Final:   {sinal_saida}")
+
+    if erros_epoca == 0:
+        break
+
+print("\n" + "="*80)
+print(f"{'TABELA RESUMO DO TREINAMENTO':^80}")
+print("="*80)
+print(f"{'Parâmetro':<25} | {'Valores Iniciais':<25} | {'Valores Finais':<25}")
+print("-"*80)
+print(f"{'Pesos (w1, w2, w3)':<25} | [{pesos_iniciais['peso1']:.4f}, {pesos_iniciais['peso2']:.4f}, {pesos_iniciais['peso3']:.4f}] | [{pesos['peso1']:.4f}, {pesos['peso2']:.4f}, {pesos['peso3']:.4f}]")
+print(f"{'Limiar (Bias)':<25} | {pesos_iniciais['peso_limiar']:.4f} {'':<19} | {pesos['peso_limiar']:.4f}")
+print(f"{'Épocas para Aprender':<25} | {'-':<25} | {epoca_parada}")
+print("="*80)
