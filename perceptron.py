@@ -43,3 +43,5 @@ dados_treino = [
 
 entradas = dados_treino[0]
 
+soma_produtos = (entradas['x1'] * pesos['peso1']) + (entradas['x2'] * pesos['peso2']) + (entradas['x3'] * pesos['peso3']) + (-1 * pesos['peso_limiar'])
+
