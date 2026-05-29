@@ -1,5 +1,7 @@
 import random
 
+taxa_aprendizado = 0.1
+
 pesos = {
     'peso1': round(random.uniform(0, 1), 3),
     'peso2': round(random.uniform(0, 1), 3),
@@ -7,7 +9,6 @@ pesos = {
     'peso_limiar': round(random.uniform(0, 1), 3)
 }
 
-# 2. Dados de Treinamento (Lista contendo o dicionário de cada linha da sua tabela)
 dados_treino = [
     {"x1": -0.6508, "x2": 0.1097, "x3": 4.0009, "d": -1.0000},
     {"x1": -1.4492, "x2": 0.8896, "x3": 4.4005, "d": -1.0000},
@@ -41,20 +42,24 @@ dados_treino = [
     {"x1": 0.2012,  "x2": 0.2611, "x3": 5.4631, "d": 1.0000}
 ]
 
-for entradas in dados_treino:
-    
-    soma_produtos = (entradas['x1'] * pesos['peso1']) + (entradas['x2'] * pesos['peso2']) + (entradas['x3'] * pesos['peso3']) + (-1 * pesos['peso_limiar'])
-    
-    if soma_produtos >= 0:
-        sinal_saida = 1.0000
-    else:
-        sinal_saida = -1.0000
+for epoca in range(5):
+    for entradas in dados_treino:
+        
+        soma_produtos = (entradas['x1'] * pesos['peso1']) + (entradas['x2'] * pesos['peso2']) + (entradas['x3'] * pesos['peso3']) + (-1 * pesos['peso_limiar'])
+        
+        if soma_produtos >= 0:
+            sinal_saida = 1.0000
+        else:
+            sinal_saida = -1.0000
 
-    print("\nProcessamento do Perceptron")
-    print(f"Valores: [{entradas['x1']}, {entradas['x2']}, {entradas['x3']}]")
-    print(f"Pesos:   [{pesos['peso1']}, {pesos['peso2']}, {pesos['peso3']}, {pesos['peso_limiar']}]")
-    print(f"Peso do Limiar (Bias): {pesos['peso_limiar']}")
-    print("-" * 40)
-    print(f"Potencial de Ativação:  {round(soma_produtos, 3)}")
-    print(f"Sinal de Saída Final:   {sinal_saida}")
-    print(f"Saída Desejada (d):     {entradas['d']}")
+
+            
+
+        print("\nProcessamento do Perceptron")
+        print(f"Valores: [{entradas['x1']}, {entradas['x2']}, {entradas['x3']}]")
+        print(f"Pesos:   [{pesos['peso1']}, {pesos['peso2']}, {pesos['peso3']}, {pesos['peso_limiar']}]")
+        print(f"Peso do Limiar (Bias): {pesos['peso_limiar']}")
+        print("-" * 40)
+        print(f"Potencial de Ativação:  {round(soma_produtos, 3)}")
+        print(f"Sinal de Saída Final:   {sinal_saida}")
+        print(f"Saída Desejada (d):     {entradas['d']}")
