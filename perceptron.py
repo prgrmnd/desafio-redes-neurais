@@ -1,17 +1,6 @@
 import random
 
-taxa_aprendizado = 0.1
-max_epocas = 5
-epoca_parada = 0
-
-pesos = {
-    'peso1': round(random.uniform(0, 1), 4),
-    'peso2': round(random.uniform(0, 1), 4),
-    'peso3': round(random.uniform(0, 1), 4),
-    'peso_limiar': round(random.uniform(0, 1), 4)
-}
-
-pesos_iniciais = pesos.copy()
+taxa_aprendizado = 0.01
 
 dados_treino = [
     {"x1": -0.6508, "x2": 0.1097, "x3": 4.0009, "d": -1.0000},
@@ -46,46 +35,54 @@ dados_treino = [
     {"x1": 0.2012,  "x2": 0.2611, "x3": 5.4631, "d": 1.0000}
 ]
 
-for epoca in range(1, max_epocas + 1):
-    erros_epoca = 0
-    epoca_parada = epoca
+for rodada in range(1, 6):
+    
+    pesos = {
+        'w1': random.uniform(0, 1),
+        'w2': random.uniform(0, 1),
+        'w3': random.uniform(0, 1),
+        'w_limiar': random.uniform(0, 1)
+    }
+    
+    pesos_iniciais = pesos.copy()
+    epoca_atual = 0
 
-    for entradas in dados_treino:
+    while True:
+        epoca_atual += 1
+        erros_epoca = 0
 
-        soma_produtos = (entradas['x1'] * pesos['peso1']) + (entradas['x2'] * pesos['peso2']) + (entradas['x3'] * pesos['peso3']) + (-1 * pesos['peso_limiar'])
+        for entradas in dados_treino:
+            soma_produtos = (entradas['x1'] * pesos['w1']) + (entradas['x2'] * pesos['w2']) + (entradas['x3'] * pesos['w3']) + (-1 * pesos['w_limiar'])
 
-        if soma_produtos >= 0:
-            sinal_saida = 1
-        else:
-            sinal_saida = -1
+            if soma_produtos >= 0:
+                sinal_saida = 1
+            else:
+                sinal_saida = -1
 
-        if sinal_saida != entradas['d']:
-            erros_epoca += 1
-            
-            erro = entradas['d'] - sinal_saida
-            pesos['peso1'] = round(pesos['peso1'] + (taxa_aprendizado * erro * entradas['x1']), 4)
-            pesos['peso2'] = round(pesos['peso2'] + (taxa_aprendizado * erro * entradas['x2']), 4)
-            pesos['peso3'] = round(pesos['peso3'] + (taxa_aprendizado * erro * entradas['x3']), 4)
-            pesos['peso_limiar'] = round(pesos['peso_limiar'] + (taxa_aprendizado * erro * -1), 4)
+            if sinal_saida != entradas['d']:
+                erros_epoca += 1
+                
+                erro = entradas['d'] - sinal_saida
+                pesos['w1'] = pesos['w1'] + (taxa_aprendizado * erro * entradas['x1'])
+                pesos['w2'] = pesos['w2'] + (taxa_aprendizado * erro * entradas['x2'])
+                pesos['w3'] = pesos['w3'] + (taxa_aprendizado * erro * entradas['x3'])
+                pesos['w_limiar'] = pesos['w_limiar'] + (taxa_aprendizado * erro * -1)
 
-            
-        print("\nProcessamento do Perceptron")
-        print(f"Valores: [{entradas['x1']}, {entradas['x2']}, {entradas['x3']}]")
-        print(f"Pesos:   [{pesos['peso1']}, {pesos['peso2']}, {pesos['peso3']}, {pesos['peso_limiar']}]")
-        print(f"Peso do Limiar (Bias): {pesos['peso_limiar']}")
-        print("-" * 40)
-        print(f"Potencial de Ativação:  {round(soma_produtos, 3)}")
-        print(f"Sinal de Saída Final:   {sinal_saida}")
+        if erros_epoca == 0:
+            break
 
-    if erros_epoca == 0:
-        break
+    print("\n" + "="*115)
+    print(f"{f'RESULTADO DO TREINAMENTO ATUAL - RODADA T{rodada}':^115}")
+    print("="*115)
+    print(f"{'Vetor de pesos iniciais':^39} | {'Vetor de pesos finais':^39} | {'Número de':<11}")
+    print(f"{'w0':^8} {'w1':^8} {'w2':^8} {'w3':^8} | {'w0':^8} {'w1':^8} {'w2':^8} {'w3':^8} | {'épocas':<11}")
+    print("-"*115)
+    print(f"{pesos_iniciais['w_limiar']:8.4f} {pesos_iniciais['w1']:8.4f} {pesos_iniciais['w2']:8.4f} {pesos_iniciais['w3']:8.4f} | "
+          f"{pesos['w_limiar']:8.4f} {pesos['w1']:8.4f} {pesos['w2']:8.4f} {pesos['w3']:8.4f} | "
+          f"{epoca_atual:<11}")
+    print("="*115)
 
-print("\n" + "="*80)
-print(f"{'TABELA RESUMO DO TREINAMENTO':^80}")
-print("="*80)
-print(f"{'Parâmetro':<25} | {'Valores Iniciais':<25} | {'Valores Finais':<25}")
-print("-"*80)
-print(f"{'Pesos (w1, w2, w3)':<25} | [{pesos_iniciais['peso1']:.4f}, {pesos_iniciais['peso2']:.4f}, {pesos_iniciais['peso3']:.4f}] | [{pesos['peso1']:.4f}, {pesos['peso2']:.4f}, {pesos['peso3']:.4f}]")
-print(f"{'Limiar (Bias)':<25} | {pesos_iniciais['peso_limiar']:.4f} {'':<19} | {pesos['peso_limiar']:.4f}")
-print(f"{'Épocas para Aprender':<25} | {'-':<25} | {epoca_parada}")
-print("="*80)
+    if rodada < 5:
+        input(f"\nPressione ENTER para iniciar a rodada de treinamento T{rodada+1}...")
+    else:
+        print("\nFim das rodadas de treinamento!")
